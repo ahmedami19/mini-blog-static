@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Blog Statique</title>
+   
+</head>
+<body>
+    <header>
+    <div class="brand">
+      <div class="logo">B</div>
+      <div>
+        <div style="font-weight:800">Mini-blog JSON</div>
+        <div style="font-size:13px;color:var(--muted)">Projet — HTML / CSS / JS </div>
+      </div>
+    </div>
+    <nav>
+      <a href="#home" id="link-home">Accueil</a>
+      <a href="#about" id="link-about">À propos</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="layout">
+      <div>
+        <div class="card">
+          <div class="controls">
+            <div class="search">
+              <input type="text" id="q" placeholder="Rechercher un article...">
+              <button id="btn-search">Rechercher</button>
+            </div>
+            <select id="category-select" aria-label="Filtrer par catégorie">
+              <option value="all">Toutes catégories</option>
+              <option value="op1">Développement Web</option>
+              <option value="op2">Developpement Mobile</option>
+              <option value="op3">Machine Learning</option>
+              <option value="op4">CyberSécurité</option>
+            </select>
+            <button id="btn-clear">Effacer</button>
+          </div>
+
+          <div id="posts" class="posts"></div>
+          <div id="empty" class="empty" style="display:none">Aucun article trouvé.</div>
+        </div>
+
+        <div id="article" class="card" style="display:none;margin-top:12px"></div>
+      </div>
+
+      <aside class="sidebar">
+        <div class="card">
+          <h3>Catégories</h3>
+          <div id="categories" class="categories"></div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <h3>À propos</h3>
+          <p class="meta">Mini-blog statique (#article-<id>).</p>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <footer>
+    <small>Projet — Mini blog statique </small>
+  </footer>
+
+
+</body>
+</html>
