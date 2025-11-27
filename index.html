@@ -169,7 +169,273 @@ footer{max-width:1100px;
   <footer>
     <small>Projet — Mini blog statique </small>
   </footer>
+<script>
+/* =========================================================
+   CONFIGURATION
+========================================================= */
+const JSON_URL = 'articles.json';
 
+/* =========================================================
+   FALLBACK : ARTICLES INTERNES (20 articles variés)
+========================================================= */
+const SAMPLE_ARTICLES = [
+  { id:'a1', title:'Découvrir JavaScript moderne', category:'Dev Web', date:'2025-01-10', image:"https://images.unsplash.com/photo-1555066931-4365d14bab8c",
+    excerpt:'Bases ES6+, DOM et premières interactions.',
+    content:'<p>Introduction aux variables modernes, fonctions fléchées et manipulation du DOM.</p>'},
+
+  { id:'a2', title:'Flexbox & Grid : mise en page moderne', category:'Design', date:'2025-01-15', image:"https://images.unsplash.com/photo-1581276879432-15a19d654956",
+    excerpt:'Les deux systèmes modernes de layout CSS.',
+    content:'<p>Flexbox pour le one-dimensional, Grid pour le two-dimensional layouts.</p>'},
+
+  { id:'a3', title:'HTML sémantique', category:'Dev Web', date:'2025-01-20', image:null,
+    excerpt:'Pourquoi utiliser section, main, article, nav...',
+    content:'<p>Améliore l’accessibilité, le SEO et la lisibilité.</p>'},
+
+  { id:'a4', title:'Créer une app mobile hybride', category:'Dev Mobile', date:'2025-02-02', image:"https://images.unsplash.com/photo-1551650992-ee03fd4d2d5d",
+    excerpt:'HTML + CSS + JS pour créer des apps multi-plateformes.',
+    content:'<p>Les frameworks hybrides facilitent le développement cross-platform.</p>'},
+
+  { id:'a5', title:'UI Mobile : règles d’ergonomie', category:'Dev Mobile', date:'2025-02-08', image:"https://images.unsplash.com/photo-1551650992-ee03fd4d2d5d",
+    excerpt:'Zones cliquables, gestes et design pour pouce.',
+    content:'<p>Adaptez vos UI aux interactions tactiles.</p>'},
+
+  { id:'a6', title:'Intro au Machine Learning', category:'ML', date:'2025-02-10', image:"https://images.unsplash.com/photo-1504384308090-c894fdcc538d",
+
+    excerpt:'Dataset, features, modèle et prédiction.',
+    content:'<p>Comprendre le fonctionnement de base des modèles.</p>'},
+
+  { id:'a7', title:'Régression linéaire simple', category:'ML', date:'2025-02-15', image:"https://images.unsplash.com/photo-1504384308090-c894fdcc538d",
+    excerpt:'Premier modèle pour prédire une valeur continue.',
+    content:'<p>On cherche la meilleure droite expliquant la relation X → Y.</p>'},
+
+  { id:'a8', title:'Cybersécurité : bases essentielles', category:'Cybersécurité', date:'2025-03-01', image:"https://images.unsplash.com/photo-1555949963-aa79dcee981c",
+    excerpt:'Confidentialité, intégrité et disponibilité.',
+    content:'<p>Principes fondamentaux de la sécurité informatique.</p>'},
+
+  { id:'a9', title:'Attaques XSS expliquées', category:'Cybersécurité', date:'2025-03-04', image:"https://images.unsplash.com/photo-1555949963-aa79dcee981c",
+    excerpt:'Injection JavaScript dans les pages non protégées.',
+    content:'<p>Sanitisation et Content-Security-Policy sont essentielles.</p>'},
+
+  { id:'a10', title:'Hash & mots de passe', category:'Cybersécurité', date:'2025-03-10', image:"https://images.unsplash.com/photo-1555949963-aa79dcee981c",
+    excerpt:'Pourquoi on ne stocke jamais les mots de passe en clair.',
+    content:'<p>Utilisation de bcrypt/Argon2 pour sécuriser les données.</p>'},
+
+  { id:'a11', title:'UX : micro-interactions utiles', category:'UX', date:'2025-03-15', image:"https://images.unsplash.com/photo-1559028012-481c04fa702d",
+    excerpt:'Feedback rapide et animations subtiles.',
+    content:'<p>Les micro animations guident l’utilisateur sans le perturber.</p>'},
+
+  { id:'a12', title:'UX : principes de navigation claire', category:'UX', date:'2025-03-22', image:"https://images.unsplash.com/photo-1559028012-481c04fa702d",
+    excerpt:'Clarté, minimalisme et hiérarchie visuelle.',
+    content:'<p>Une navigation simple améliore l’expérience utilisateur.</p>'},
+
+  { id:'a13', title:'API REST avec fetch()', category:'Dev Web', date:'2025-04-01', image:"https://images.unsplash.com/photo-1555066931-4365d14bab8c",
+    excerpt:'GET, POST et gestion des erreurs.',
+    content:'<p>Fetch permet de communiquer facilement avec des APIs externes.</p>'},
+
+  { id:'a14', title:'localStorage : stockage simplifié', category:'Dev Web', date:'2025-04-04', image:"https://images.unsplash.com/photo-1555066931-4365d14bab8c",
+    excerpt:'Sauvegarder des données dans le navigateur.',
+    content:'<p>Idéal pour sauvegarder les préférences et petites données.</p>'},
+
+  { id:'a15', title:'Concepts de Data Science', category:'Data', date:'2025-04-10', image:null,
+    excerpt:'Nettoyage, analyse et visualisation.',
+    content:'<p>La data science combine statistiques, ML et data viz.</p>'},
+
+  { id:'a16', title:'Créer un design system', category:'Design', date:'2025-04-15', image:"https://images.unsplash.com/photo-1581276879432-15a19d654956",
+    excerpt:'Couleurs, typographies, composants réutilisables.',
+    content:'<p>Un design system assure cohérence et productivité.</p>'},
+
+  { id:'a17', title:'Projet JS : To-Do App', category:'Dev Web', date:'2025-04-20', image:"https://images.unsplash.com/photo-1555066931-4365d14bab8c",
+
+    excerpt:'Manipulation du DOM et persistance.',
+    content:'<p>Ajout/suppression de tâches + sauvegarde locale.</p>'},
+
+  { id:'a18', title:'Sécurité GitHub : bonnes pratiques', category:'Cybersécurité', date:'2025-04-25', image:null,
+    excerpt:'SSH keys, secrets et permissions.',
+    content:'<p>Évitez les fuites d’informations dans les repos publics.</p>'},
+
+  { id:'a19', title:'Responsive Design : mobile first', category:'Design', date:'2025-04-28', image:"https://images.unsplash.com/photo-1581276879432-15a19d654956",    excerpt:'Construire une interface qui s’adapte.',
+    content:'<p>Commencer par mobile rend l’UI plus robuste.</p>'},
+
+  { id:'a20', title:'Déploiement GitHub Pages', category:'Dev Web', date:'2025-05-01', image:"https://images.unsplash.com/photo-1555066931-4365d14bab8c",
+
+    excerpt:'Héberger un projet statique facilement.',
+    content:'<p>Pages permet de déployer un site en quelques secondes.</p>'}
+];
+
+
+let articles = [];
+let currentFilter = { q: "", category: "all" };
+
+/* 
+   DOM ELEMENTS */
+const postsEl = document.getElementById("posts");
+const categoriesEl = document.getElementById("categories");
+const categorySelect = document.getElementById("category-select");
+const qInput = document.getElementById("q");
+const btnSearch = document.getElementById("btn-search");
+const btnClear  = document.getElementById("btn-clear");
+const articleEl = document.getElementById("article");
+const emptyEl   = document.getElementById("empty");
+
+/*
+   CHARGEMENT DES ARTICLES
+ */
+async function loadArticles() {
+    /*try because the JSON file may not be found*/
+  try {
+    const r = await fetch(JSON_URL, { cache: "no-store" });
+    if (!r.ok) throw new Error();
+    articles = await r.json();
+  } catch (e) {
+    articles = SAMPLE_ARTICLES;
+  }
+
+  renderCategories();
+  renderList();
+  handleRouting();
+}
+
+/* =========================================================
+   LISTE DES ARTICLES
+========================================================= */
+function renderList() {
+  const filtered = articles.filter(a => {
+    const matchQ =
+      currentFilter.q === "" ||
+      (a.title + a.excerpt + a.content)
+        .toLowerCase()
+        .includes(currentFilter.q.toLowerCase());
+
+    const matchC =
+      currentFilter.category === "all" ||
+      a.category === currentFilter.category;
+
+    return matchQ && matchC;
+  });
+
+  postsEl.innerHTML = "";
+
+  if (filtered.length === 0) {
+    emptyEl.style.display = "block";
+    return;
+  }
+
+  emptyEl.style.display = "none";
+
+  filtered
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .forEach(a => {
+      const div = document.createElement("div");
+      div.className = "post";
+      div.innerHTML = `
+        <div class="thumb">${
+          a.image
+            ? `<img src="${a.image}">`
+            : `<div style="color:#6ee7b7;font-size:12px">IMG</div>`
+        }</div>
+        <div style="flex:1">
+          <h3><a href="#article-${a.id}" style="color:inherit;text-decoration:none;">${a.title}</a></h3>
+          <div class="meta">${a.category} • ${new Date(a.date).toLocaleDateString()}</div>
+          <p style="color:var(--muted)">${a.excerpt}</p>
+        </div>
+      `;
+      postsEl.appendChild(div);
+    });
+}
+
+
+function renderCategories() {
+  const unique = ["all", ...new Set(articles.map(a => a.category))];
+  categoriesEl.innerHTML = "";
+
+  unique.forEach(cat => {
+    const tag = document.createElement("div");
+    tag.className = "tag" + (cat === "all" ? " active" : "");
+    tag.textContent = cat;
+    tag.dataset.value = cat;
+    tag.onclick = () => setCategory(cat);
+    categoriesEl.appendChild(tag);
+  });
+
+  // select box
+  categorySelect.innerHTML = unique
+    .map(c => `<option value="${c}">${c}</option>`)
+    .join("");
+}
+
+function setCategory(cat) {
+  currentFilter.category = cat;
+  categorySelect.value = cat;
+
+  Array.from(categoriesEl.children).forEach(ch =>
+    ch.classList.toggle("active", ch.dataset.value === cat)
+  );
+
+  renderList();
+}
+
+/* =========================================================
+   RECHERCHE
+========================================================= */
+btnSearch.onclick = () => {
+  currentFilter.q = qInput.value;
+  renderList();
+};
+
+btnClear.onclick = () => {
+  qInput.value = "";
+  currentFilter.q = "";
+  setCategory("all");
+};
+
+/* =========================================================
+   ROUTAGE
+========================================================= */
+function handleRouting() {
+  const h = location.hash;
+
+  if (h.startsWith("#article-")) {
+    const id = h.replace("#article-", "");
+    showArticle(id);
+  } else if (h === "#about") {
+    showAbout();
+  } else {
+    showList();
+  }
+}
+
+function showList() {
+  articleEl.style.display = "none";
+}
+
+function showAbout() {
+  articleEl.style.display = "block";
+  articleEl.innerHTML =
+    `<h2>À propos</h2><p class="meta">Mini-blog statique avec JSON + filtrage + routing.</p>`;
+}
+
+function showArticle(id) {
+  const a = articles.find(x => x.id === id);
+  if (!a) return;
+
+  articleEl.style.display = "block";
+  articleEl.innerHTML = `
+    <a href="#home" style="color:var(--muted)">← Retour</a>
+    <h2>${a.title}</h2>
+    <div class="meta">${a.category} • ${new Date(a.date).toLocaleDateString()}</div>
+    <div style="margin-top:12px">
+      ${a.image ? `<img src="${a.image}" style="max-width:100%;border-radius:8px;">` : ""}
+      ${a.content}
+    </div>
+  `;
+}
+
+/* =========================================================
+   DÉMARRAGE
+========================================================= */
+window.addEventListener("hashchange", handleRouting);
+loadArticles();
+</script>
 
 </body>
 </html>
