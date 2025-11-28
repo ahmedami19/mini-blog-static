@@ -160,7 +160,7 @@ footer{max-width:1100px;
 
         <div class="card" style="margin-top:12px">
           <h3>À propos</h3>
-          <p class="meta">Mini-blog statique (#article-<id>).</p>
+          <p class="meta">Mini-blog statique - &copy;Ahmed Amine Wacharine</p>
         </div>
       </aside>
     </section>
@@ -183,19 +183,20 @@ const SAMPLE_ARTICLES = [
     excerpt:'Bases ES6+, DOM et premières interactions.',
     content:'<p>Introduction aux variables modernes, fonctions fléchées et manipulation du DOM.</p>'},
 
-  { id:'a2', title:'Flexbox & Grid : mise en page moderne', category:'Design', date:'2025-01-15', image:"https://images.unsplash.com/photo-1581276879432-15a19d654956",
+  { id:'a2', title:'Flexbox & Grid : mise en page moderne', category:'Design', date:'2025-01-15', image:"https://images.unsplash.com/photo-1587614382346-4ec70e388b28",
     excerpt:'Les deux systèmes modernes de layout CSS.',
     content:'<p>Flexbox pour le one-dimensional, Grid pour le two-dimensional layouts.</p>'},
 
-  { id:'a3', title:'HTML sémantique', category:'Dev Web', date:'2025-01-20', image:null,
+  { id:'a3', title:'HTML sémantique', category:'Dev Web', date:'2025-01-20', image:"https://images.unsplash.com/photo-1555066931-4365d14bab8c",
     excerpt:'Pourquoi utiliser section, main, article, nav...',
     content:'<p>Améliore l’accessibilité, le SEO et la lisibilité.</p>'},
 
-  { id:'a4', title:'Créer une app mobile hybride', category:'Dev Mobile', date:'2025-02-02', image:"https://images.unsplash.com/photo-1551650992-ee03fd4d2d5d",
+  { id:'a4', title:'Créer une app mobile hybride', category:'Dev Mobile', date:'2025-02-02', image:"https://images.unsplash.com/photo-1498050108023-c5249f4df085",
+
     excerpt:'HTML + CSS + JS pour créer des apps multi-plateformes.',
     content:'<p>Les frameworks hybrides facilitent le développement cross-platform.</p>'},
 
-  { id:'a5', title:'UI Mobile : règles d’ergonomie', category:'Dev Mobile', date:'2025-02-08', image:"https://images.unsplash.com/photo-1551650992-ee03fd4d2d5d",
+  { id:'a5', title:'UI Mobile : règles d’ergonomie', category:'Dev Mobile', date:'2025-02-08', image:"https://images.unsplash.com/photo-1498050108023-c5249f4df085",
     excerpt:'Zones cliquables, gestes et design pour pouce.',
     content:'<p>Adaptez vos UI aux interactions tactiles.</p>'},
 
@@ -236,11 +237,13 @@ const SAMPLE_ARTICLES = [
     excerpt:'Sauvegarder des données dans le navigateur.',
     content:'<p>Idéal pour sauvegarder les préférences et petites données.</p>'},
 
-  { id:'a15', title:'Concepts de Data Science', category:'Data', date:'2025-04-10', image:null,
+  { id:'a15', title:'Concepts de Data Science', category:'Data', date:'2025-04-10', image:"https://images.unsplash.com/photo-1506765515384-028b60a970df",
+
     excerpt:'Nettoyage, analyse et visualisation.',
     content:'<p>La data science combine statistiques, ML et data viz.</p>'},
 
-  { id:'a16', title:'Créer un design system', category:'Design', date:'2025-04-15', image:"https://images.unsplash.com/photo-1581276879432-15a19d654956",
+  { id:'a16', title:'Créer un design system', category:'Design', date:'2025-04-15', image: "https://images.unsplash.com/photo-1587614382346-4ec70e388b28",
+
     excerpt:'Couleurs, typographies, composants réutilisables.',
     content:'<p>Un design system assure cohérence et productivité.</p>'},
 
@@ -249,11 +252,12 @@ const SAMPLE_ARTICLES = [
     excerpt:'Manipulation du DOM et persistance.',
     content:'<p>Ajout/suppression de tâches + sauvegarde locale.</p>'},
 
-  { id:'a18', title:'Sécurité GitHub : bonnes pratiques', category:'Cybersécurité', date:'2025-04-25', image:null,
+  { id:'a18', title:'Sécurité GitHub : bonnes pratiques', category:'Cybersécurité', date:'2025-04-25', image:"https://images.unsplash.com/photo-1555949963-aa79dcee981c",
     excerpt:'SSH keys, secrets et permissions.',
     content:'<p>Évitez les fuites d’informations dans les repos publics.</p>'},
 
-  { id:'a19', title:'Responsive Design : mobile first', category:'Design', date:'2025-04-28', image:"https://images.unsplash.com/photo-1581276879432-15a19d654956",    excerpt:'Construire une interface qui s’adapte.',
+  { id:'a19', title:'Responsive Design : mobile first', category:'Design', date:'2025-04-28', image:    "https://images.unsplash.com/photo-1587614382346-4ec70e388b28",
+    excerpt:'Construire une interface qui s’adapte.',
     content:'<p>Commencer par mobile rend l’UI plus robuste.</p>'},
 
   { id:'a20', title:'Déploiement GitHub Pages', category:'Dev Web', date:'2025-05-01', image:"https://images.unsplash.com/photo-1555066931-4365d14bab8c",
@@ -345,12 +349,12 @@ function renderList() {
 
 
 function renderCategories() {
-  const unique = ["all", ...new Set(articles.map(a => a.category))];
+  const unique = ["All", ...new Set(articles.map(a => a.category))];
   categoriesEl.innerHTML = "";
 
   unique.forEach(cat => {
     const tag = document.createElement("div");
-    tag.className = "tag" + (cat === "all" ? " active" : "");
+    tag.className = "tag" + (cat === "All" ? " active" : "");
     tag.textContent = cat;
     tag.dataset.value = cat;
     tag.onclick = () => setCategory(cat);
@@ -385,7 +389,7 @@ btnSearch.onclick = () => {
 btnClear.onclick = () => {
   qInput.value = "";
   currentFilter.q = "";
-  setCategory("all");
+  setCategory("All");
 };
 
 /* =========================================================
