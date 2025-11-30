@@ -4,6 +4,8 @@
 Bienvenue dans mon projet de développement web : **un mini-blog statique entièrement conçu en HTML, CSS et JavaScript**, capable d’afficher des articles depuis un fichier JSON, de filtrer par catégorie, d’effectuer une recherche en temps réel, et de naviguer entre les articles grâce à un mini-système de routage.
 
 Ce projet a été réalisé dans le cadre du module **Développement Web** et répond à toutes les consignes pédagogiques : utilisation exclusive des technologies front-end natives, ergonomie, propreté de code, créativité et déploiement sur GitHub Pages.
+Le liens de Github Pages:
+https://ahmedami19.github.io/mini-blog-static/
 
 ---
 
